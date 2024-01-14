@@ -3,7 +3,11 @@
 @inject ITodoService _todoService;
 
 <PageTitle>To-do List</PageTitle>
-To-do List
+
+<div class="border" style="padding: 20px;">
+    <h4>Novo Item</h4>
+    <TodoItemForm OnItemAdded="@ItemAdded"/>
+</div>
 
 <div class="border" style="padding: 20px; margin-top:20px">
     <div style="display: flex; flex-direction: column">
@@ -27,5 +31,11 @@ To-do List
     public string ItemClass (TodoItem item)
     {
         return item.Completed ? "item-completed" : "";
+    }
+
+    public void ItemAdded ()
+    {
+        Todos = _todoService.GetAll().ToList();
+        StateHasChanged();
     }
 }

@@ -4,5 +4,6 @@
     {
         public void Add(TodoItem item);
         public IEnumerable<TodoItem> GetAll();
+        public void Delete(TodoItem item);
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace TodoAppBlazor
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TodoAppBlazor
 {
     public class TodoItem
     {
+
         public TodoItem(string text) 
         {
             Text = text;

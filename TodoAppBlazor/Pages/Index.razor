@@ -16,8 +16,24 @@
         <div class="flex-center" style="margin-bottom: 10px;">
             <div style="display:flex; align-items: center; margin-bottom: 10px;">
                 <div class="@ItemClass(todo)" style="width: 280px; color: #fafafa">@todo.Text</div>
+
+                @if (todo.Completed)
+                {
+                    <div style="width: 120px">
+                        <button class="btn btn-primary" onclick="@(() => UncompletedeItem(todo))">Uncompletede</button>
+                    </div>
+                }       
+                        
+                @if (!todo.Completed)
+                {       
+                    <div style="width: 120px">
+                        <button class="btn btn-primary" onclick="@(() => CompleteItem(todo))">Complete</button>
+                    </div>
+                }
+
+
                 <div>
-                    <button class="btn btn-danger" onclick="@(() => DeleteItem(todo))">Delet</button>
+                    <button class="btn btn-danger" onclick="@(() => DeleteItem(todo))">Delete</button>
                 </div>
             </div>
 
@@ -49,4 +65,14 @@ private IList<TodoItem> Todos { get; set; } = new List<TodoItem>();
             _todoService.Delete(item);
             ItemsChanged();
         }
+        public void CompleteItem(TodoItem item)
+        {
+            _todoService.Complete(item);
+            ItemsChanged();
+        }
+    public void UncompletedeItem(TodoItem item)
+    {
+        _todoService.Uncompletede(item);
+        ItemsChanged();
+    }
 }

@@ -10,9 +10,7 @@ public class TodoService : ITodoService
     public TodoService()
     {
         _todoItems = new List<TodoItem> {
-            new TodoItem("Dobrar Roupas"),
-            new TodoItem("Estudar C#"),
-            new TodoItem("Treino")
+            new TodoItem("Suas tarefas aparecerão aqui!"),
 
         };
     }
@@ -37,4 +35,15 @@ public class TodoService : ITodoService
     {
         _todoItems.Remove(item);
     }
+
+    public void Complete(TodoItem item)
+    {
+        item.Completed = true;
+    }
+    public void Uncompletede(TodoItem item)
+    {
+        item.Completed = false;
+
+    }
+
 }

@@ -70,3 +70,8 @@ a, .btn-link {
 .item-completed {
     text-decoration: line-through;
 }
+
+.no-outline {
+    box-shadow: none !important;
+    border: none !important;
+}

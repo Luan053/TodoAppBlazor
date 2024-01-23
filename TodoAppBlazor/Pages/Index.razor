@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using TodoAppBlazor.Services;
 @inject ITodoService _todoService;
+@using Radzen
+
 
 <PageTitle>To-do List</PageTitle>
 
@@ -19,22 +21,22 @@
 
                 @if (todo.Completed)
                 {
-                    <div style="width: 120px">
-                        <button class="btn btn-primary" onclick="@(() => UncompletedeItem(todo))">Uncompletede</button>
+                    <div style="width: 50px">
+                            <RadzenButton Click=@(() => UncompletedeItem(todo)) Icon="remove_done" ButtonStyle="ButtonStyle.Danger" />
                     </div>
                 }       
                         
                 @if (!todo.Completed)
                 {       
-                    <div style="width: 120px">
-                        <button class="btn btn-primary" onclick="@(() => CompleteItem(todo))">Complete</button>
+                    <div style="width: 50px">
+                            <RadzenButton Click=@(() => CompleteItem(todo)) Icon="done" ButtonStyle="ButtonStyle.Success" />
                     </div>
                 }
 
-
                 <div>
-                    <button class="btn btn-danger" onclick="@(() => DeleteItem(todo))">Delete</button>
+                        <RadzenButton Click=@(() => DeleteItem(todo)) Icon="delete" ButtonStyle="ButtonStyle.Danger" />
                 </div>
+                
             </div>
 
         </div>

@@ -1,7 +1,4 @@
-﻿using TodoAppBlazor.Services;
-using TodoAppBlazor;
-
-namespace TodoAppBlazor.Services;
+﻿namespace TodoAppBlazor.Services;
 
 public class TodoService : ITodoService
 {
@@ -11,7 +8,6 @@ public class TodoService : ITodoService
     {
         _todoItems = new List<TodoItem> {
             new TodoItem("Suas tarefas aparecerão aqui!"),
-
         };
     }
 
@@ -24,7 +20,6 @@ public class TodoService : ITodoService
     {
         _todoItems.Remove(item);
     }
-
 
     public IEnumerable<TodoItem> GetAll()
     {
@@ -40,10 +35,9 @@ public class TodoService : ITodoService
     {
         item.Completed = true;
     }
+
     public void Uncompletede(TodoItem item)
     {
         item.Completed = false;
-
     }
-
 }

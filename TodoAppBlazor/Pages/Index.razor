@@ -1,80 +1,82 @@
 ﻿@page "/"
-@using TodoAppBlazor.Services;
-@inject ITodoService _todoService;
+@using TodoAppBlazor.Services
 @using Radzen
+@inject ITodoService _todoService;
 
 
 <PageTitle>To-do List</PageTitle>
 
 <div style="padding: 20px;">
     <h4 style="color: #fafafa">Novo Item</h4>
-    <TodoItemForm OnItemAdded="@ItemsChanged" />
+    <TodoItemForm OnItemAdded="@ItemsChanged"/>
 </div>
 
-<div style="padding: 20px; margin-top:20px">
-    <div style="display: flex; flex-direction: column">
+<div style="padding: 20px;">
+    <RadzenCard Style="display: flex; flex-direction: column; width: 28rem; gap:1rem;background: #333333">
         @foreach (var todo in Todos)
         {
-        <div class="flex-center" style="margin-bottom: 10px;">
-            <div style="display:flex; align-items: center; margin-bottom: 10px;">
-                <div class="@ItemClass(todo)" style="width: 280px; color: #fafafa">@todo.Text</div>
+                <div style="display:flex; align-items: center; width: 100%;">
+                    <div class="@ItemClass(todo)" style="width: 280px; color: #fafafa">@todo.Text</div>
+                    <div style="display: flex; justify-content:end; align-items:end; gap: 0.5rem">
 
-                @if (todo.Completed)
-                {
-                    <div style="width: 50px">
-                            <RadzenButton Click=@(() => UncompletedeItem(todo)) Icon="remove_done" ButtonStyle="ButtonStyle.Danger" />
-                    </div>
-                }       
+                        @if (todo.Completed)
+                        {
+                            
+                                <RadzenButton Click=@(() => UncompletedItem(todo)) Icon="remove_done" ButtonStyle="ButtonStyle.Danger"/>
+                            
+                        }
+
+                        @if (!todo.Completed)
+                        {
+                            
+                                <RadzenButton Click=@(() => CompleteItem(todo)) Icon="done" ButtonStyle="ButtonStyle.Success"/>
+                            
+                        }
+
                         
-                @if (!todo.Completed)
-                {       
-                    <div style="width: 50px">
-                            <RadzenButton Click=@(() => CompleteItem(todo)) Icon="done" ButtonStyle="ButtonStyle.Success" />
+                            <RadzenButton Click=@(() => DeleteItem(todo)) Icon="delete" ButtonStyle="ButtonStyle.Danger"/>
+                        
                     </div>
-                }
-
-                <div>
-                        <RadzenButton Click=@(() => DeleteItem(todo)) Icon="delete" ButtonStyle="ButtonStyle.Danger" />
                 </div>
-                
-            </div>
-
-        </div>
         }
-    </div>
+    </RadzenCard>
 </div>
 
 @code {
-private IList<TodoItem> Todos { get; set; } = new List<TodoItem>();
+    private IList<TodoItem> Todos { get; set; } = new List<TodoItem>();
 
-        protected override void OnInitialized()
-        {
-            Todos = _todoService.GetAll().ToList();
-        }
+    protected override void OnInitialized()
+    {
+        Todos = _todoService.GetAll().ToList();
+    }
 
-        public string ItemClass (TodoItem item)
-        {
-            return item.Completed ? "item-completed" : "";
-        }
+    public string ItemClass(TodoItem item)
+    {
+        return item.Completed ? "item-completed" : "";
+    }
 
-        public void ItemsChanged()
-        {
-            Todos = _todoService.GetAll().ToList();
-            StateHasChanged();
-        }
-        public void DeleteItem(TodoItem item)
-        {
-            _todoService.Delete(item);
-            ItemsChanged();
-        }
-        public void CompleteItem(TodoItem item)
-        {
-            _todoService.Complete(item);
-            ItemsChanged();
-        }
-    public void UncompletedeItem(TodoItem item)
+    public void ItemsChanged()
+    {
+        Todos = _todoService.GetAll().ToList();
+        StateHasChanged();
+    }
+
+    public void DeleteItem(TodoItem item)
+    {
+        _todoService.Delete(item);
+        ItemsChanged();
+    }
+
+    public void CompleteItem(TodoItem item)
+    {
+        _todoService.Complete(item);
+        ItemsChanged();
+    }
+
+    public void UncompletedItem(TodoItem item)
     {
         _todoService.Uncompletede(item);
         ItemsChanged();
     }
+
 }

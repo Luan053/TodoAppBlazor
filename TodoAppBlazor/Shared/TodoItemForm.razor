@@ -2,12 +2,17 @@
 @inject ITodoService _todoService;
 @using Radzen
 @using System.Text.Json
+@using System.ComponentModel.DataAnnotations
 
-<EditForm  Model="@NewItem" OnSubmit="@ItemAdded">
-    <RadzenCard Style="display: flex; width: 28rem; align-items: end; gap: 0.5rem; background: #333333">
+<EditForm  Model="@NewItem" OnValidSubmit="ItemAdded" >
+    <RadzenCard Style="display: flex; width: 28rem; align-items: end; gap: 0.5rem; background: #333333; padding-bottom: 2.5rem;">
         <div>
             <RadzenText TextStyle="TextStyle.Subtitle2" Style="color: #fff" TagName="TagName.H3">Tarefa: </RadzenText>
             <RadzenTextBox Placeholder="Ex: Academia" @bind-Value="NewItem.Text" id="Item" class="w-100 no-outline" Style="background: #444; color: #fff"/>
+            <div style="position: absolute; margin-top: 0.4rem; margin-left: -0.7rem">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
+            </div>
         </div>
         <div>
             <RadzenButton ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Success" Icon="add" value="Add"/>
@@ -19,7 +24,7 @@
 @code {
     [Parameter]
     public required Action OnItemAdded { get; set; }
-
+    
     private TodoItem NewItem = new TodoItem("");
 
     public void ItemAdded()
@@ -27,7 +32,7 @@
         var newItem = new TodoItem(NewItem.Text);
         NewItem.Text = "";
         _todoService.Add(newItem);
-
+        
         if (OnItemAdded != null)
         {
             OnItemAdded();
